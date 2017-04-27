@@ -1,0 +1,35 @@
+package main
+
+import (
+    "fmt"
+    "io/ioutil"
+    "os"
+)
+
+func main() {
+    z, err := ioutil.ReadFile("text.txt") 
+    if err != nil {
+        fmt.Print(err)
+    }
+
+    fmt.Println("bytes:" ,z) 
+    str := string(z)
+    fmt.Println(str) 
+    str2 := StingToBinary(str)
+    fmt.Println(str2)
+    file, err := os.Create("binary.bin")
+    if err != nil {
+        return
+    }
+    defer file.Close()
+
+    file.WriteString(str2)
+}
+
+func StingToBinary(u string) string {
+    formula := ""
+    for _, y := range u {
+        formula = fmt.Sprintf("%s%.8b", formula, y)
+    }
+    return formula
+}
